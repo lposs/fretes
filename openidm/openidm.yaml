@@ -40,21 +40,19 @@ spec:
       #     value: /config
       - name: openidm
         image: forgerock/openidm:nightly
-        env:
-          - name: OPENIDM_CUSTOM_DIR
-            value: /config/stack-config/openidm-custom
+        # env:
+        #   - name: OPENIDM_PROJECT_DIR
+        #     value: /config/stack-config/openidm
         ports:
           - containerPort: 8080
         imagePullPolicy: Always
-        # command: [ "/opt/openidm/startup.sh", "-p", "/config/stack-config/openidm"]
+        command: [ "/opt/openidm/startup.sh", "-p", "custom/stack-config/openidm"]
         # Note: Docker does not allow mounting on /
         volumeMounts:
           - name: idmconf
-            mountPath: /config
+            mountPath: /opt/openidm/custom
       volumes:
         - name: idmconf
           gitRepo:
             repository: https://github.com/ForgeRock/stack-config.git
             revision: master
-
-        #   emptyDir: {}
