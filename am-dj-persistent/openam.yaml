@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: openam
-        image: forgerock/openam
+        image: forgerock/openam:nightly
         #imagePullPolicy: Always
         ports:
           - name: openam
