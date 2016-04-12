@@ -1,3 +1,5 @@
+# Host based PVs - for testing only. This will only work on a single
+# node cluster
 kind: PersistentVolume
 apiVersion: v1
 metadata:

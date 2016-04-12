@@ -13,33 +13,30 @@ spec:
         app: ssoconfig
     spec:
       containers:
-      - name: git-sync
-        image: gcr.io/google_containers/git-sync
+      - name: ssoconfig
+        image: forgerock/ssoconfig:nightly
         imagePullPolicy: Always
         volumeMounts:
-        - name: config
-          mountPath: /config
+          - name: secrets
+            mountPath: /secrets
         env:
-        - name: GIT_SYNC_REPO
-          value: https://github.com/ForgeRock/stack-config.git
-        - name: GIT_SYNC_DEST
-          value: /config
-      - name: ssoconfig
-        image: wstrange/ssoconfig-nightly:latest
-        volumeMounts:
-          - name: config
-            mountPath: /config
+        - name: LB_PRIMARY_URL
+          valueFrom:
+            configMapKeyRef:
+              name: am-config
+              key: openam.fqdn
+        - name: COOKIE_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: am-config
+              key: openam.cookiedomain
+        - name: OPENAM_CONFIG_URL
+          valueFrom:
+            configMapKeyRef:
+              name: am-config
+              key: openam.configurl
       restartPolicy: Never
       volumes:
         - name: secrets
           secret:
             secretName: fr-secrets
-        # todo: possibly replace git sidecar with this
-        # currently gitRepo has issues on CoreOS - due to kubelet not
-        # finding the git command
-        # - name: config
-        #   gitRepo:
-        #     repository: git@github.com:ForgeRock/stack-config.git
-        #     revision: HEAD
-        - name: config
-          emptyDir: {}

@@ -1,0 +1,12 @@
+# Experimental use of ConfigMap
+# Concept: Dynamically configure AM based on configuration template
+# The values here would get substitued into the AM template
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: am-config
+  namespace: default
+data:
+  openam.fqdn:  http://openam.example.com:80/openam
+  openam.cookiedomain: .example.com
+  openam.configurl: https://raw.githubusercontent.com/ForgeRock/stack-config/master/openam/01_config.properties
