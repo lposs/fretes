@@ -26,18 +26,6 @@ spec:
         name: openidm
     spec:
       containers:
-      # sidecar to fetch our config from git
-      # - name: git-sync
-      #   image: gcr.io/google_containers/git-sync
-      #   #imagePullPolicy: Always
-      #   volumeMounts:
-      #   - name: idmconf
-      #     mountPath: /config
-      #   env:
-      #   - name: GIT_SYNC_REPO
-      #     value: https://github.com/ForgeRock/stack-config.git
-      #   - name: GIT_SYNC_DEST
-      #     value: /config
       - name: openidm
         image: forgerock/openidm:nightly
         # env:
@@ -45,7 +33,7 @@ spec:
         #     value: /config/stack-config/openidm
         ports:
           - containerPort: 8080
-        imagePullPolicy: Always
+        #imagePullPolicy: Always
         command: [ "/opt/openidm/startup.sh", "-p", "custom/stack-config/openidm"]
         # Note: Docker does not allow mounting on /
         volumeMounts:
