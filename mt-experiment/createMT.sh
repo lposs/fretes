@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+# Create k8s manifests for multiple tenant IDM installs
+# This uses labels to select the appropriate backend services
 TENANTS="bar foo"
 DIR=out
 
@@ -15,6 +16,6 @@ jsonnet  --var tenant="$tenant" idmsvc.jsonnet > "$DIR/idmsvc-$tenant.json"
 
 done
 
-
+# Create the ingress
 jsonnet  --var tenants="$TENANTS" ingress.jsonnet > $DIR/ingress.json
 
