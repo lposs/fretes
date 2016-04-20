@@ -8,3 +8,4 @@ staging/
 .idea
 *.vdi
 scratch.sh
+out/
