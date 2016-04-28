@@ -27,3 +27,8 @@ docker run \
         --cluster-domain=cluster.local \
         --allow-privileged=true --v=2
 
+
+echo "Once Kuberentes is running you probably want to setup dns. Run the following:"
+echo "./dns.sh"
+
+
