@@ -4,7 +4,7 @@
 
 
 echo "If you are on GKE/GCE, create a cluster with:"
-echo "misc/create-cluster.sh"
+echo "gke/create-cluster.sh"
 
 echo "Creating persistent volumes and claims"
 kubectl create -f pv/pv-host.yaml
