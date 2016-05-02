@@ -4,6 +4,9 @@
 
 export K8S_VERSION=$(curl -sS https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 
+echo "Cleaning up any old Docker containers"
+
+./stopdocker.sh
 
 docker run \
     --volume=/:/rootfs:ro \
@@ -28,7 +31,10 @@ docker run \
         --allow-privileged=true --v=2
 
 
-echo "Once Kuberentes is running you probably want to setup dns. Run the following:"
-echo "./dns.sh"
+echo "Waiting a bit for Kubernetes to start"
+sleep 30
+kubectl get nodes
 
+echo "Setting up DNS"
+./dns.sh
 

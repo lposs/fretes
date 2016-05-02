@@ -1,0 +1,55 @@
+# Run OpenIDM on k8
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: openidm
+spec:
+  selector:
+    name: openidm
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30100
+
+---
+# Uses git-sync side car instead of gitRepo volume
+# gitRepo does not yet work on coreOS
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: openidm
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: openidm
+    spec:
+      containers:
+      # sidecar to fetch our config from git
+      - name: git-sync
+        image: gcr.io/google_containers/git-sync
+        #imagePullPolicy: Always
+        volumeMounts:
+        - name: idmconf
+          mountPath: /config
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://github.com/ForgeRock/stack-config.git
+        - name: GIT_SYNC_DEST
+          value: /config
+      - name: openidm
+        image: forgerock/openidm:nightly
+        ports:
+          - containerPort: 8080
+        #imagePullPolicy: Always
+        command: [ "/opt/openidm/startup.sh", "-p", "custom/openidm/"]
+        # Note: Docker does not allow mounting on /
+        volumeMounts:
+          - name: idmconf
+            mountPath: /opt/openidm/custom
+      volumes:
+        - name: idmconf
+          emptyDir: {}

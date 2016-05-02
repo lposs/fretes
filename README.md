@@ -28,12 +28,10 @@ tag in the manifests.
 
 # Samples:
 
-am-dj-persistent - example that shows how to run OpenAM, OpenDJ and a persistent
-configuration. This uses Kubernetes Persistent Volumes. This is the most recent
+am-idm-dj - example that shows how to run OpenAM, OpenDJ  and OpenIDM using 
+persistent volumes. This is the most recent
 work - so start here.  Please see the README notes in that folder
 
-am-dj-idm - example that includes OpenAM, OpenDJ, OpenIDM. This configuration
-is not persistent and will disappear when you quit.
 
 openidm - Run's OpenIDM with the Postgres database. Also configures an instance of OpenDJ
 
@@ -41,7 +39,7 @@ Example:
 
 ```
 prepare.sh
-kubectl create -f am-dj-idm
+kubectl create -f am-idm-dj
 kubectl get pods
 kubectl get services
 ```

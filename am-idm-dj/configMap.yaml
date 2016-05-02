@@ -1,6 +1,6 @@
 # Experimental use of ConfigMap
 # Concept: Dynamically configure AM based on configuration template
-# The values here would get substitued into the AM template
+# The values here get substitued into the AM template that ssoconfig uses
 kind: ConfigMap
 apiVersion: v1
 metadata:

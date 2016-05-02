@@ -1,16 +1,19 @@
 # TODO
 
+My todo plus random notes - not terribly well organized
+
+
 Strategies for OpenAM bootstrapping
 
 Currently mounting ~/openam as a persistent Volume.
 Consider: Create contents of ~/openam on the fly - using ENV vars
 
 
-Todos:
+
    - Create a standalone persistence VM.  For OpenDJ and NFS. Possibly postgres for OpenIDM
       (this aligns with the strategy that persistence services are probably going to live outside of Docker)
    - prototype a script that creates ~/openam using ENV vars and secrets (keystore.jks may be an issue)
-   - Create  Apache + policy agent Docker image. Should be able to dynamically configure
+
 # Misc Notes:
 
 
@@ -55,3 +58,10 @@ Complete example needed for David (to replace Fred)
 - Sample policies (load with REST API, or xacml 3 import / export)
 - Sample OAuth 2.0 provider
 -
+
+
+# Todo
+
+- create a job that clears out a config - or figure out how to recycle the storage
+-
+
