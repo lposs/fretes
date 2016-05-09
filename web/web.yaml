@@ -16,34 +16,35 @@ spec:
       # Bit tricky as we clone ourselves here
       - name: git-sync
         image: gcr.io/google_containers/git-sync
-        #imagePullPolicy: Always
         volumeMounts:
         - name: content
-          mountPath: /content
+          mountPath: /config
         env:
         - name: GIT_SYNC_REPO
           value: https://github.com/ForgeRock/fretes.git
         - name: GIT_SYNC_DEPTH
-          value: 1
+          value: "1"
         - name: GIT_SYNC_DEST
           value: /config
+        - name: GIT_SYNC_WAIT
+          value: "60"
       - name: web
         image: nginx
-        #imagePullPolicy: Always
         ports:
           - name: web
             containerPort: 80
         volumeMounts:
           - name: content
             mountPath: /config
-          - name: ngnix-conf
-            mountPath: /etc/nginx/nginx.conf
+          - name: nginx-conf
+            mountPath: /etc/nginx
       volumes:
         - name: content
           emptyDir: {}
         - name: nginx-conf
           configMap:
             name: nginx-conf
+
 ---
 apiVersion: v1
 kind: Service
