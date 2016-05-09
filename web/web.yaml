@@ -1,0 +1,59 @@
+# Web server to serve up landing page, etc.
+# Will not be protected
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+         name: web
+    spec:
+      containers:
+      # sidecar to fetch our config from
+      # Bit tricky as we clone ourselves here
+      - name: git-sync
+        image: gcr.io/google_containers/git-sync
+        #imagePullPolicy: Always
+        volumeMounts:
+        - name: content
+          mountPath: /content
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://github.com/ForgeRock/fretes.git
+        - name: GIT_SYNC_DEPTH
+          value: 1
+        - name: GIT_SYNC_DEST
+          value: /config
+      - name: web
+        image: nginx
+        #imagePullPolicy: Always
+        ports:
+          - name: web
+            containerPort: 80
+        volumeMounts:
+          - name: content
+            mountPath: /config
+          - name: ngnix-conf
+            mountPath: /etc/nginx/nginx.conf
+      volumes:
+        - name: content
+          emptyDir: {}
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: "TCP"
+      name: web
+  selector:
+    name: web

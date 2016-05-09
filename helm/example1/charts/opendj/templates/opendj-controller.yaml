@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
       - name: opendj
-        image: forgerock/opendj:nightly
+        image: {{.repo}}/opendj:{{.tag}}
         ports:
         - name: ldap
           containerPort: 389
           protocol: TCP
         volumeMounts:
           - name: secrets
-            mountPath: /var/secrets
+            mountPath: /secrets
             readOnly: true
           - name: opendj-disk
             mountPath: /opt/opendj/data

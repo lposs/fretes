@@ -32,7 +32,9 @@ docker run \
 
 
 echo "Waiting a bit for Kubernetes to start"
-sleep 30
+sleep 40
+
+# todo: loop until kube comes up
 kubectl get nodes
 
 echo "Setting up DNS"

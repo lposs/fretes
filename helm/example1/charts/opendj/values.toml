@@ -1,0 +1,5 @@
+# The pod name
+name = "my-alpine"
+
+repo = "docker.io/forgerock"
+tag = "nightly"

@@ -7,42 +7,42 @@ spec:
   - host: openam.example.com
     http:
       paths:
-      - path: /openam/*
+      - path: /openam
         backend:
           serviceName: openam
           servicePort: 80
-      - path: /openam/
-        backend:
-          serviceName: openam
-          servicePort: 80
-      - path: /apache/*
+#      - path: /openam/
+#        backend:
+#          serviceName: openam
+#          servicePort: 80
+#      - path: /apache/*
+#        backend:
+#          serviceName: apache-svc
+#          servicePort: 80
+      - path: /apache
         backend:
           serviceName: apache-svc
           servicePort: 80
-      - path: /apache/
-        backend:
-          serviceName: apache-svc
-          servicePort: 80
-      - path: /openidm/*
-        backend:
-          serviceName: openidm
-          servicePort: 80
+#      - path: /openidm/*
+#        backend:
+#          serviceName: openidm
+#          servicePort: 80
       - path: /openidm/
         backend:
           serviceName: openidm
           servicePort: 80
-      - path: /admin/*
-        backend:
-          serviceName: openidm
-          servicePort: 80
+#      - path: /admin/*
+#        backend:
+#          serviceName: openidm
+#          servicePort: 80
       - path: /admin/
         backend:
           serviceName: openidm
           servicePort: 80
-      - path: /idmselfservice/*
-        backend:
-          serviceName: openidm
-          servicePort: 80
+#      - path: /idmselfservice/*
+#        backend:
+#          serviceName: openidm
+#          servicePort: 80
       - path: /idmselfservice/
         backend:
           serviceName: openidm
