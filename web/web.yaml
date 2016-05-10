@@ -15,6 +15,7 @@ spec:
       # sidecar to fetch our config from
       # Bit tricky as we clone ourselves here
       - name: git-sync
+        # adding tag :0.0 does no work....
         image: gcr.io/google_containers/git-sync
         volumeMounts:
         - name: content
@@ -22,8 +23,8 @@ spec:
         env:
         - name: GIT_SYNC_REPO
           value: https://github.com/ForgeRock/fretes.git
-        - name: GIT_SYNC_DEPTH
-          value: "1"
+#        - name: GIT_SYNC_DEPTH
+#          value: "1"
         - name: GIT_SYNC_DEST
           value: /config
         - name: GIT_SYNC_WAIT

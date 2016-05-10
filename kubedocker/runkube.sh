@@ -5,7 +5,12 @@
 export K8S_VERSION=$(curl -sS https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 
 # See https://github.com/kubernetes/kubernetes/issues/23392
-# Your systemd startup for docker needs to be tweaked.
+# systemd startup for docker needs to be tweaked.
+#     --volume=/var/lib/kubelet/:/var/lib/kubelet:rw,shared \
+# note: this did not work for me on ubuntu 16.04 - it made system unstable,
+# presumably because the containers are run in privileged mode and can interact with the host o/s
+
+
 
 echo "Cleaning up any old Docker containers"
 
@@ -15,7 +20,7 @@ sudo docker run \
     --volume=/:/rootfs:ro \
     --volume=/sys:/sys:ro \
     --volume=/var/lib/docker/:/var/lib/docker:rw \
-    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw,shared \
+    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw \
     --volume=/var/run:/var/run:rw \
     --net=host \
     --pid=host \
