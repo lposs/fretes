@@ -4,15 +4,18 @@
 
 export K8S_VERSION=$(curl -sS https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 
+# See https://github.com/kubernetes/kubernetes/issues/23392
+# Your systemd startup for docker needs to be tweaked.
+
 echo "Cleaning up any old Docker containers"
 
 ./stopdocker.sh
 
-docker run \
+sudo docker run \
     --volume=/:/rootfs:ro \
     --volume=/sys:/sys:ro \
     --volume=/var/lib/docker/:/var/lib/docker:rw \
-    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw \
+    --volume=/var/lib/kubelet/:/var/lib/kubelet:rw,shared \
     --volume=/var/run:/var/run:rw \
     --net=host \
     --pid=host \

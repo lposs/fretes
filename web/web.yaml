@@ -44,6 +44,9 @@ spec:
         - name: nginx-conf
           configMap:
             name: nginx-conf
+            items:
+            - key: nginx.conf
+              path: nginx.conf
 
 ---
 apiVersion: v1
@@ -51,8 +54,10 @@ kind: Service
 metadata:
   name: web
 spec:
+  type: NodePort
   ports:
-    - port: 80
+    - nodePort: 30080
+      port: 80
       targetPort: 80
       protocol: "TCP"
       name: web
