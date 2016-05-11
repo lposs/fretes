@@ -4,7 +4,7 @@
 
 **This code is not supported by ForgeRock and it is your responsibility to verify that the software is suitable and safe for use.**
 
-Run on the ForgeRock Stack (OpenAM, OpenDJ, OpenIDM, OpenIG) on Kubernetes (k8s)
+Run the ForgeRock Stack (OpenAM, OpenDJ, OpenIDM, OpenIG) on Kubernetes (k8s)
 
 
 # Contributing 
