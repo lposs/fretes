@@ -55,3 +55,6 @@ If you are on Kube-solo-osx you can find your IP by bringing
 up the "fleet-ui" in the menu - and looking at the IP.
 You can also ssh into the VM and do an ifconfig -a to get eth0
 
+
+# todo
+
