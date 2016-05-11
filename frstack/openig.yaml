@@ -33,15 +33,14 @@ spec:
         image: gcr.io/google_containers/git-sync
         volumeMounts:
         - name: conf
-          mountPath: /config
+          mountPath: /git
         env:
         - name: GIT_SYNC_REPO
-          value: https://github.com/ForgeRock/stack-config.git
+          value: ssh://git@stash.forgerock.org:7999/docker/fretes.git
         - name: GIT_SYNC_DEST
-          value: /config
+          value: /git
         - name: GIT_SYNC_WAIT
           value: "60"
-
       - name: openig
         image: forgerock/openig:nightly
         ports:
@@ -49,10 +48,10 @@ spec:
         #imagePullPolicy: Always
         env:
           - name: OPENIG_BASE
-            value: /config/openig
+            value: /git/config/openig/sample-config
         volumeMounts:
           - name: conf
-            mountPath: /config
+            mountPath: /git
       volumes:
-        - name: idmconf
+        - name: conf
           emptyDir: {}

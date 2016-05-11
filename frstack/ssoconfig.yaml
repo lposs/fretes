@@ -1,3 +1,6 @@
+# runs ssoconfig on an OpenAM instance.
+# The image will wait until openam is available, then
+# execute the configuration specified by OPENAM_CONFIG_URL
 apiVersion: extensions/v1beta1
 kind: Job
 metadata:

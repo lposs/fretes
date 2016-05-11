@@ -37,16 +37,15 @@ spec:
           mountPath: /config
         env:
         - name: GIT_SYNC_REPO
-          value: https://github.com/ForgeRock/stack-config.git
+          value: ssh://git@stash.forgerock.org:7999/docker/fretes.git
         - name: GIT_SYNC_DEST
-          value: /config
+          value: /git
       - name: openidm
         image: forgerock/openidm:nightly
         ports:
           - containerPort: 8080
         #imagePullPolicy: Always
-        command: [ "/opt/openidm/startup.sh", "-p", "custom/openidm/"]
-        # Note: Docker does not allow mounting on /
+        command: [ "/opt/openidm/startup.sh", "-p", "custom/config/openidm/"]
         volumeMounts:
           - name: idmconf
             mountPath: /opt/openidm/custom
