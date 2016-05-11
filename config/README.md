@@ -1,11 +1,4 @@
-
-Configuration manifests to run 'amconfig'
-
-This is an experimental dart program that makes REST calls against
-OpenAM to add policies.
-
-kubectl -f amconfig.yaml
+# config
 
 
-
-The source is at https://github.com/wstrange/amconfig
+Holds configurations for the stack deployment on Kubernetes / Docker (Experimental)
