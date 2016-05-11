@@ -3,15 +3,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: openidm
+  name: openig
 spec:
   selector:
-    name: openidm
+    name: openig
   type: NodePort
   ports:
   - port: 80
     targetPort: 8080
-    nodePort: 30100
+    nodePort: 30102
 
 ---
 # Uses git-sync side car instead of gitRepo volume
@@ -33,12 +33,12 @@ spec:
         image: gcr.io/google_containers/git-sync
         volumeMounts:
         - name: conf
-          mountPath: /git
+          mountPath: /config
         env:
         - name: GIT_SYNC_REPO
-          value: ssh://git@stash.forgerock.org:7999/docker/fretes.git
+          value: https://github.com/ForgeRock/fretes.git
         - name: GIT_SYNC_DEST
-          value: /git
+          value: /config
         - name: GIT_SYNC_WAIT
           value: "60"
       - name: openig

@@ -9,4 +9,4 @@ metadata:
 data:
   openam.fqdn:  http://openam.example.com:80/openam
   openam.cookiedomain: .example.com
-  openam.configurl: https://stash.forgerock.org/projects/DOCKER/repos/fretes/browse/config/openam/01_config.properties?at=master&raw
+  openam.configurl: https://raw.githubusercontent.com/ForgeRock/fretes/master/config/openam/01_config.properties
