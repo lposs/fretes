@@ -1,0 +1,58 @@
+# Run OpenIDM on k8
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: openidm
+spec:
+  selector:
+    name: openidm
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30100
+
+---
+# Uses git-sync side car instead of gitRepo volume
+# gitRepo does not yet work on coreOS
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openig
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: openig
+    spec:
+      containers:
+      # sidecar to fetch our config from git
+      - name: git-sync
+        image: gcr.io/google_containers/git-sync
+        volumeMounts:
+        - name: conf
+          mountPath: /config
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://github.com/ForgeRock/stack-config.git
+        - name: GIT_SYNC_DEST
+          value: /config
+        - name: GIT_SYNC_WAIT
+          value: "60"
+
+      - name: openig
+        image: forgerock/openig:nightly
+        ports:
+          - containerPort: 8080
+        #imagePullPolicy: Always
+        env:
+          - name: OPENIG_BASE
+            value: /config/openig
+        volumeMounts:
+          - name: conf
+            mountPath: /config
+      volumes:
+        - name: idmconf
+          emptyDir: {}
