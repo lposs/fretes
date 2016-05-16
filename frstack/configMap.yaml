@@ -7,6 +7,8 @@ metadata:
   name: am-config
   namespace: default
 data:
-  openam.fqdn:  http://openam.example.com:80/openam
-  openam.cookiedomain: .example.com
+#  openam.fqdn:  http://openam.example.com:80/openam
+#  openam.cookiedomain: .example.
+  openam.fqdn:  https://test.my2do.com:443/openam
+  openam.cookiedomain: .my2do.com
   openam.configurl: https://raw.githubusercontent.com/ForgeRock/fretes/master/config/openam/01_config.properties

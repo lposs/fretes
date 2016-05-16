@@ -1,0 +1,44 @@
+# Run OpenIDM on k8
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: openidm
+spec:
+  selector:
+    name: openidm
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30101
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openidm
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: openidm
+    spec:
+      containers:
+      - name: openidm
+        image: forgerock/openidm:nightly
+        ports:
+          - containerPort: 8080
+        env:
+        - name: OPENIDM_CUSTOM_CONF
+          value: custom/fretes/config/openidm
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: idmconf
+            mountPath: /opt/openidm/custom
+      volumes:
+        - name: idmconf
+          gitRepo:
+            repository: https://github.com/ForgeRock/fretes.git
+            revision: master
