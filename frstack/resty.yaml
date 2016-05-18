@@ -33,10 +33,10 @@ spec:
         imagePullPolicy: Always
         env:
           - name:   CUSTOM_CONF_DIR
-            value:  /config/fretes/resty
+            value:  /git/fretes/config/resty
         volumeMounts:
           - name: config
-            mountPath: /config
+            mountPath: /git
       volumes:
         - name: config
           gitRepo:
