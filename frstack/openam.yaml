@@ -13,7 +13,7 @@ spec:
       containers:
       - name: openam
         image: forgerock/openam:nightly
-        #imagePullPolicy: Always
+        imagePullPolicy: Always
         ports:
           - name: openam
             containerPort: 8080

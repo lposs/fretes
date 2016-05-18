@@ -47,19 +47,19 @@ spec:
         backend:
           serviceName: openidm
           servicePort: 80
-      - path: /admin/*
-        backend:
-          serviceName: openidm
-          servicePort: 80
       - path: /admin
         backend:
           serviceName: openidm
           servicePort: 80
-      - path: /idmselfservice/*
+      - path: /admin/*
         backend:
           serviceName: openidm
           servicePort: 80
       - path: /idmselfservice
+        backend:
+          serviceName: openidm
+          servicePort: 80
+      - path: /idmselfservice/*
         backend:
           serviceName: openidm
           servicePort: 80
@@ -70,4 +70,12 @@ spec:
       - path: /ig/*
         backend:
           serviceName: openig
+          servicePort: 80
+      - path: /resty
+        backend:
+          serviceName: resty
+          servicePort: 80
+      - path: /resty/*
+        backend:
+          serviceName: resty
           servicePort: 80

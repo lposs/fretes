@@ -4,11 +4,14 @@ metadata:
   name: openam
 spec:
   type: NodePort
-  #type: ClusterIP
-  #type: LoadBalancer
   ports:
     - port: 80
+      name: am80
       targetPort: 8080
       nodePort: 30080
+    - port: 443
+      targetPort: 8443
+      nodePort: 30443
+      name: am443
   selector:
     site: site1

@@ -1,0 +1,44 @@
+# Run nginx resty with OIDC config
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: resty
+spec:
+  selector:
+    name: resty
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30105
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: resty
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: resty
+    spec:
+      containers:
+      - name: openidm
+        image: forgerock/resty:nightly
+        ports:
+          - containerPort: 80
+        imagePullPolicy: Always
+        env:
+          - name:   CUSTOM_CONF_DIR
+            value:  /config/fretes/resty
+        volumeMounts:
+          - name: config
+            mountPath: /config
+      volumes:
+        - name: config
+          gitRepo:
+            repository: https://github.com/ForgeRock/fretes.git
+            revision: master
