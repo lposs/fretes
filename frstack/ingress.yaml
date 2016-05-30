@@ -71,23 +71,7 @@ spec:
         backend:
           serviceName: openig
           servicePort: 80
-#      - path: /resty
-#        backend:
-#          serviceName: resty
-#          servicePort: 80
-#      - path: /resty/*
-#        backend:
-#          serviceName: resty
-#          servicePort: 80
-#      - path: /redirect_uri
-#        backend:
-#          serviceName: resty
-#          servicePort: 80
-#      - path: /foo
-#        backend:
-#          serviceName: resty
-#          servicePort: 80
-        # Catch all for nginx ingress. This is not going to work on GCE, you will need a /*
+      # Catch all for nginx ingress. This is not going to work on GCE, you will need a /*
       - path: /
         backend:
           serviceName: resty
