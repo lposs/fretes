@@ -63,11 +63,11 @@ spec:
         backend:
           serviceName: openidm
           servicePort: 80
-      - path: /ig
+      - path: /openig
         backend:
           serviceName: openig
           servicePort: 80
-      - path: /ig/*
+      - path: /openig/*
         backend:
           serviceName: openig
           servicePort: 80

@@ -33,12 +33,12 @@ spec:
         image: gcr.io/google_containers/git-sync
         volumeMounts:
         - name: conf
-          mountPath: /config
+          mountPath: /git
         env:
         - name: GIT_SYNC_REPO
           value: https://github.com/ForgeRock/fretes.git
         - name: GIT_SYNC_DEST
-          value: /config
+          value: /git
         - name: GIT_SYNC_WAIT
           value: "60"
       - name: openig
