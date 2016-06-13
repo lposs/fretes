@@ -1,0 +1,6 @@
+name: opendj
+description: OpenDJ Helm Chart
+version: 0.1.0
+home: "http://www.forgerock.com"
+
+
