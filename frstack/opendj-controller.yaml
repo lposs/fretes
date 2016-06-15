@@ -1,15 +1,13 @@
 # We use a single OpenDJ instance as the config and CTS store for the cluster
 # This instance is ephemeral - just for demo purposes
-apiVersion: v1
-kind: ReplicationController
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   labels:
     name: opendj
   name: opendj
 spec:
   replicas: 1
-  selector:
-    name: opendj
   template:
     metadata:
       labels:
