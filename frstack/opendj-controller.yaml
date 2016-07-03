@@ -23,7 +23,7 @@ spec:
           protocol: TCP
         volumeMounts:
           - name: secrets
-            mountPath: /var/secrets
+            mountPath: /var/secrets/opendj
             readOnly: true
           - name: opendj-disk
             mountPath: /opt/opendj/data

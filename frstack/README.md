@@ -1,4 +1,4 @@
-# Example showing openam, opendj, ssoadm
+# Example showing openam, opendj, openidm
 
 You need to setup persistent volumes
 for this example. The easiest way to do this in a single node test cluster
