@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openam
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: openam
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      #terminationGracePeriodSeconds: 0
+      containers:
+      - name: openam
+        image: forgerock/openam-custom:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+          name: http

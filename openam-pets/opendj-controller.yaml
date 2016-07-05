@@ -1,0 +1,39 @@
+# We use a single OpenDJ instance as the config and CTS store for the cluster
+# This instance is ephemeral - just for demo purposes
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: opendj-cts
+  name: opendj-cts
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+         name: opendj-cts
+    spec:
+      containers:
+      - name: opendj-cts
+        image: opendj_opendj:latest
+        imagePullPolicy: Never
+        ports:
+        - name: ldap
+          containerPort: 389
+          protocol: TCP
+        env:
+        - name: BOOTSTRAP
+          value: /opt/opendj/bootstrap/cts/setup.sh
+#        volumeMounts:
+#          - name: secrets
+#            mountPath: /var/secrets/opendj
+#            readOnly: true
+#          - name: opendj-disk
+#            mountPath: /opt/opendj/data
+#      volumes:
+#        - name: secrets
+#          secret:
+#            secretName: fr-secrets
+#        - name: opendj-disk
+#          persistentVolumeClaim:
+#            claimName: opendj-storage
