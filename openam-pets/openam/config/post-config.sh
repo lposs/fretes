@@ -31,27 +31,11 @@ function put {
   curl -s -X PUT -H "Content-Type: application/json" -H "iPlanetDirectoryPro: ${ssoToken}" -d "$1" "$2"
 }
 
-# Example of enabling OAuth2 / OIDC
-post '{}' "${openam}/json/realm-config/services/oauth-oidc?_action=create&_prettyPrint=true"
-
-# example of creating a realm
-realm=testrealm
-
-post '{"name":"'${realm}'","parentPath":"/","aliases":[],"active":true,"statelessSessionsEnabled":false}'  \
-   "${openam}/json/global-config/realms?_action=create&_prettyPrint=true"
-
-
-# Example of creating an OAuth2 client
-client=oauthtest
-
-post '{"username":"'${client}'", "AgentType": "OAuth2Client", "userpassword": "password", "com.forgerock.openam.oauth2provider.redirectionURIs": [], "com.forgerock.openam.oauth2provider.scopes": ["[0]=openid"], "com.forgerock.openam.oauth2provider.defaultScopes": [], "com.forgerock.openam.oauth2provider.tokenEndPointAuthMethod": "client_secret_post"}'  \
- "${openam}/json/agents?_action=create&_prettyPrint=true"
-
 put "@setupcts.json" "${openam}/json/global-config/servers/01/properties/cts"
 
-post "@setupsite.json" "${openam}/json/global-config/sites?_action=create"
+post "@setupPolicy.json" "${openam}/json/policies?_action=create"
 
-put "@addservicetosite.json" "${openam}/json/global-config/servers/01/properties/general"
+post "@setupAgent.json" "${openam}/json/agents?_action=create"
 
 # Test OAuth2
 # Not working - todo: find out why

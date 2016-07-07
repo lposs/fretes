@@ -1,0 +1,15 @@
+{
+"name": "mypolicy",
+"active": true,
+"description": "My Policy.",
+"applicationName": "iPlanetAMWebAgentService",
+"actionValues": { "POST": true, "GET": true },
+"resources": [
+    "http://openam.test.com:30090/*",
+    "http://openam.test.com:30090/*?*"
+],
+"subject":{
+    "type":"AuthenticatedUsers"
+},
+"resourceTypeUuid": "76656a38-5f8e-401b-83aa-4ccb74ce88d2"
+}
