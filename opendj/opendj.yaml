@@ -24,24 +24,19 @@ spec:
           name: ldaps
         - containerPort: 4444
           name: djadmin
-        env:
-        - name: BOOTSTRAP
-          value: /var/tmp/config/djconfig
+#        env:
+#        - name: BOOTSTRAP
+#          value: /var/tmp/config/djconfig
         volumeMounts:
           - name: opendj-data
             mountPath: /opt/opendj/data
           - name: secrets
             mountPath: /var/secrets/opendj
             readOnly: true
-          - name: djconfig
-            mountPath: /var/tmp/config
       volumes:
       - name: secrets
         secret:
           secretName: fr-secrets
-      - name: djconfig
-        configMap:
-          name: djconfig
   volumeClaimTemplates:
   - metadata:
       name: opendj-data
