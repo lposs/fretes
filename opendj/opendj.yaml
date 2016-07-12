@@ -10,12 +10,16 @@ spec:
       labels:
         app: opendj
       annotations:
+        # This is a debugging hook. if set to
+        # false the petset will pause after each pet is brought up
+        # See the petset docs for an explanation
         pod.alpha.kubernetes.io/initialized: "true"
     spec:
       #terminationGracePeriodSeconds: 0
       containers:
       - name: opendj
         image: forgerock/opendj:latest
+        # Use Never if we are building with a local docker daemon
         imagePullPolicy: Never
         ports:
         - containerPort: 389
@@ -24,12 +28,21 @@ spec:
           name: ldaps
         - containerPort: 4444
           name: djadmin
-#        env:
-#        - name: BOOTSTRAP
-#          value: /var/tmp/config/djconfig
+        env:
+        # bootstrap setup is a path the cts setup bunlded with the docker image
+        # Override with your own setup script if you wish. See the docker image
+        - name: BOOTSTRAP
+          value: /opt/opendj/bootstrap/cts/setup.sh
+        # The server we should replicate to
+        - name: DJ_MASTER_SERVER
+          value: opendj-0.opendj
+        # The base DN for setup and for replication
+        - name: BASE_DN
+          value: "dc=cts,dc=forgerock,dc=com"
+        # Peristent data. Uncomment if you want DJ data to survive container restarts.
         volumeMounts:
-          - name: opendj-data
-            mountPath: /opt/opendj/data
+#          - name: opendj-data
+#            mountPath: /opt/opendj/data
           - name: secrets
             mountPath: /var/secrets/opendj
             readOnly: true
@@ -37,13 +50,14 @@ spec:
       - name: secrets
         secret:
           secretName: fr-secrets
-  volumeClaimTemplates:
-  - metadata:
-      name: opendj-data
+# Templates for persistent data. Uncomment if you have opendj-data uncomment above
+#  volumeClaimTemplates:
+#  - metadata:
+#      name: opendj-data
 #      annotations:
 #        volume.alpha.kubernetes.io/storage-class: anything
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
+#    spec:
+#      accessModes: [ "ReadWriteOnce" ]
+#      resources:
+#        requests:
+#          storage: 1Gi
