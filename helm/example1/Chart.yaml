@@ -1,4 +1,0 @@
-name: example1
-description: Deploy assembly of charts to make up a full suite deployment
-version: 0.1.0
-home: https://stash.forgerock.org/projects/DOCKER/repos/docker

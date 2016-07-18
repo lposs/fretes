@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{template "fullname" .}}
+spec:
+  replicas: {{default 1 .Values.replicaCount | quote}}
+  template:
+    metadata:
+      labels:
+        app:  {{template "fullname" .}}
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      #terminationGracePeriodSeconds: 0
+      containers:
+      - name: openam
+        image: {{ default "forgerock/openam" .Values.image}}:{{ default "latest" .Values.imageTag}}
+        imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+        - name: secrets
+          mountPath: /var/secrets/openam
+          readOnly: true
+        - name: config
+          mountPath: /var/tmp/config
+          readOnly: true
+      volumes:
+      - name: secrets
+        secret:
+          secretName:  "{{.Release.Name}}-secrets"
+      - name: config
+        configMap:
+          name: {{template "fullname" .}}
