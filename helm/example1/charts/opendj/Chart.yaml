@@ -1,4 +1,0 @@
-name: opendj
-description: Deploy an OpenDJ instance
-version: 0.1.0
-home: https://stash.forgerock.org/projects/DOCKER/repos/docker

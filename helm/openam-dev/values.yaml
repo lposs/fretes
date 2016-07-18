@@ -1,0 +1,18 @@
+# Default values for openam-dev.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+image: forgerock/openam
+imageTag: latest
+
+replicaCount: 1
+
+serverUrl: http://openam.test.com:8080
+
+fqdnHostname: openam.test.com
+
+amadmin_pw: password
+
+
+

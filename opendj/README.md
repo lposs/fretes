@@ -18,7 +18,8 @@ that file for details.
 
 See the Docker OpenDJ image https://stash.forgerock.org/projects/DOCKER/repos/docker/browse/opendj 
 for more information on how to customize and bootstrap different 
-OpenDJ configurations. 
+OpenDJ configurations.  There are a number of environment variables that are used to
+configure OpenDJ and setup replication.
 
 
 
