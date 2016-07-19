@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openam
+spec:
+  replicas: {{default 1 .Values.replicaCount | quote}}
+  template:
+    metadata:
+      labels:
+        app: openam
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      #terminationGracePeriodSeconds: 0
+      containers:
+      - name: openam
+        image: {{ default "forgerock/openam" .Values.image}}:{{ default "latest" .Values.imageTag}}
+        imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+        - name: openam-secrets
+          mountPath: /var/secrets/openam
+          readOnly: true
+        - name: config
+          mountPath: /var/tmp/config
+          readOnly: true
+{{- if .Values.externalConfigStore }}
+      - name: opendj
+        image: {{ default "forgerock/opendj" .Values.djImage}}:{{ default "latest" .Values.djImageTag}}
+        imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
+        env:
+        - name: BASE_DN
+          value: {{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
+        ports:
+        - containerPort: 389
+          name: ldap
+        - containerPort: 4444
+          name: djadmin
+        volumeMounts:
+        - name: dj-secrets
+          mountPath: /var/secrets/opendj
+{{- end }}
+      volumes:
+      - name: openam-secrets
+        secret:
+          secretName: openam-secrets
+      - name: config
+        configMap:
+          name: openam-config
+{{- if .Values.externalConfigStore }}
+      - name: dj-secrets
+        secret:
+          secretName: dj-secrets
+{{ end }}

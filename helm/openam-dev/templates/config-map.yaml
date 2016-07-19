@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{template "fullname" .}}
+  name: openam-config
 data:
   openam.properties: |
     SERVER_URL=${SERVER_URL}
@@ -16,15 +16,25 @@ data:
     AMLDAPUSERPASSWD=Passw0rd
     COOKIE_DOMAIN=.test.com
     ACCEPT_LICENSES=true
+{{- if .Values.externalConfigStore }}
+    DATA_STORE=dirServer
+    DIRECTORY_SSL=SIMPLE
+    DIRECTORY_SERVER=opendj
+    DIRECTORY_PORT=389
+    DIRECTORY_ADMIN_PORT=4444
+{{- else }}
     DATA_STORE=embedded
     DIRECTORY_SSL=SIMPLE
     DIRECTORY_SERVER=localhost
     DIRECTORY_PORT=50389
     DIRECTORY_ADMIN_PORT=4444
     DIRECTORY_JMX_PORT=1689
-    ROOT_SUFFIX=o=openam
+{{- end }}
+    ROOT_SUFFIX={{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
     DS_DIRMGRDN=cn=Directory Manager
-    DS_DIRMGRPASSWD=chang3me
+    DS_DIRMGRPASSWD={{ default "password" .Values.amadmin_pw }}
+    LB_SITE_NAME=site1
+    LB_PRIMARY_URL={{ default "http://openam.test.com:80/openam" .Values.loadBalancerUrl }}
   env.sh: |
     #!/usr/bin/env bash
     # These variables are mandatory
