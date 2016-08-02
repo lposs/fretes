@@ -10,11 +10,8 @@ openam="${SERVER_URL}/openam"
 ssoToken=$(curl -s -X POST -H "Content-Type: application/json" -H "X-OpenAM-Username: amadmin" \
    -H "X-OpenAM-Password: ${ADMIN_PWD}" -d '{}' "${openam}/json/authenticate")
 
-firstCut=${ssoToken#*:}
-secondCut=${firstCut%,*}
-length=${#secondCut}-2
-finalCut=${secondCut:1:$length}
-ssoToken=$finalCut
+TOKEN_SPLIT=`echo ${ssoToken} | sed -e 's/[{}:,\"]/ /g'`
+ssoToken=`echo "$TOKEN_SPLIT" | cut -d " " -f 6`
 
 
 function post {
