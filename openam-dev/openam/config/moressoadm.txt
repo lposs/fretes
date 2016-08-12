@@ -1,0 +1,5 @@
+create-site --sitename openam --siteurl http://openam.test.com:30080/openam
+
+create-sub-cfg --servicename iPlanetAMSessionService --subconfigname Site --subconfigid openam -a "iplanet-am-session-sfo-enabled=true"
+
+add-site-members -s "openam" -e http://openam.test.com:8080/openam
