@@ -15,7 +15,7 @@ spec:
       name: am443
   selector:
     app: openam
-{{ if .Values.externalConfigStore }}
+{{if .Values.externalConfigStore}}
 ---
 apiVersion: v1
 kind: Service
@@ -33,5 +33,5 @@ spec:
       #
   # Note the DJ container is in the same pod as openam - so we use the openam selector
   selector:
-    app: openam
+    app: opendj
 {{end}}

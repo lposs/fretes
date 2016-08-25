@@ -1,0 +1,13 @@
+# Ingress definition to configure external routes
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: openam-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /openam
+        backend:
+          serviceName: openam
+          servicePort: 80

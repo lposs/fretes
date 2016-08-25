@@ -8,10 +8,11 @@ spec:
     metadata:
       labels:
         app: openam
-      annotations:
-        pod.alpha.kubernetes.io/initialized: "true"
+      # This is really only needed if we use Petset alpha
+#      annotations:
+#        pod.alpha.kubernetes.io/initialized: "true"
     spec:
-      #terminationGracePeriodSeconds: 0
+      terminationGracePeriodSeconds: 10
       containers:
       - name: openam
         image: {{ default "forgerock/openam" .Values.image}}:{{ default "latest" .Values.imageTag}}
@@ -26,22 +27,10 @@ spec:
         - name: config
           mountPath: /var/tmp/config
           readOnly: true
-{{- if .Values.externalConfigStore }}
-      - name: opendj
-        image: {{ default "forgerock/opendj" .Values.djImage}}:{{ default "latest" .Values.djImageTag}}
-        imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
-        env:
-        - name: BASE_DN
-          value: {{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
-        ports:
-        - containerPort: 389
-          name: ldap
-        - containerPort: 4444
-          name: djadmin
-        volumeMounts:
-        - name: dj-secrets
-          mountPath: /var/secrets/opendj
-{{- end }}
+{{- if .Values.persistentVolumes }}
+        - name: openam-config
+          mountPath: /root/openam
+{{end}}
       volumes:
       - name: openam-secrets
         secret:
@@ -49,8 +38,8 @@ spec:
       - name: config
         configMap:
           name: openam-config
-{{- if .Values.externalConfigStore }}
-      - name: dj-secrets
-        secret:
-          secretName: dj-secrets
-{{ end }}
+{{- if .Values.persistentVolumes }}
+      - name: openam-config
+        hostPath:
+          path: /data/openam-config
+{{end}}

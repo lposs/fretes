@@ -6,15 +6,15 @@ metadata:
   name: openam-config
 data:
   openam.properties: |
-    SERVER_URL=${SERVER_URL}
+    SERVER_URL={{ .Values.serverUrl }}
     DEPLOYMENT_URI=/openam
     BASE_DIR=/root/openam
     locale=en_US
     PLATFORM_LOCALE=en_US
     AM_ENC_KEY=O6QWwHPO4os+zEz3Nqn/2daAYWyiFE32
-    ADMIN_PWD=${ADMIN_PWD}
+    ADMIN_PWD={{ default "password" .Values.amadmin_pw }}
     AMLDAPUSERPASSWD=Passw0rd
-    COOKIE_DOMAIN=.test.com
+    COOKIE_DOMAIN={{ default ".test.com" .Values.cookieDomain }}
     ACCEPT_LICENSES=true
 {{- if .Values.externalConfigStore }}
     DATA_STORE=dirServer
@@ -34,7 +34,7 @@ data:
     DS_DIRMGRDN=cn=Directory Manager
     DS_DIRMGRPASSWD={{ default "password" .Values.amadmin_pw }}
     LB_SITE_NAME=site1
-    LB_PRIMARY_URL={{ default "http://openam.test.com:80/openam" .Values.loadBalancerUrl }}
+    LB_PRIMARY_URL={{ default "https://openam.test.com:443/openam" .Values.loadBalancerUrl }}
   env.sh: |
     #!/usr/bin/env bash
     # These variables are mandatory

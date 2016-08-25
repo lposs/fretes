@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: opendj
+spec:
+  replicas: {{default 1 .Values.replicaCount | quote}}
+  template:
+    metadata:
+      labels:
+        app: opendj
+      # This is really only needed if we use Petset alpha
+#      annotations:
+#        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: opendj
+        image: {{ default "forgerock/opendj" .Values.djImage}}:{{ default "latest" .Values.djImageTag}}
+        imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
+        env:
+        - name: BASE_DN
+          value: {{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
+        ports:
+        - containerPort: 389
+          name: ldap
+        - containerPort: 4444
+          name: djadmin
+        volumeMounts:
+        - name: dj-secrets
+          mountPath: /var/secrets/opendj
+{{- if .Values.persistentVolumes }}
+        - name: dj-data
+          mountPath: /opt/opendj/data
+{{end}}
+      volumes:
+      - name: dj-secrets
+        secret:
+          secretName: dj-secrets
+{{- if .Values.persistentVolumes }}
+      - name: dj-data
+        hostPath:
+          path: /data/dj-data
+{{end}}

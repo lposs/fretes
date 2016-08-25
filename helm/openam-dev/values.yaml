@@ -14,9 +14,10 @@ replicaCount: 1
 serverUrl: http://openam:80
 
 # What OpenAM is known by *outside* the cluster
-loadBalancerUrl: "http://openam.test.com:30080/openam"
+loadBalancerUrl: "https://openam.test.com:443/openam"
 
 fqdnHostname: openam.test.com
+cookieDomain: .test.com
 amadmin_pw: password
 
 # Suffix for OpenDJ config store
@@ -29,3 +30,7 @@ externalConfigStore: true
 
 djImage: forgerock/opendj
 djImageTag: latest
+
+
+## Todo - control whether we persist data or not
+persistentVolumes: true
