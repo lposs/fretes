@@ -12,16 +12,17 @@ spec:
     spec:
       containers:
       - name: master
-        image: jenkins:${.jenkinsVersion}
+        image: {{ .Values.jenkinsImage | quote}}
+        imagePullPolicy: {{ default "IfNotPresent" .Values.imagePullPolicy}}
         ports:
         - containerPort: 8080
         - containerPort: 50000
         env:
-        - name: JENKINS_OPTS
-          valueFrom:
-            secretKeyRef:
-              name: jenkins
-              key: options
+#        - name: JENKINS_OPTS
+#          valueFrom:
+#            secretKeyRef:
+#              name: jenkins
+#              key: options
         volumeMounts:
         - mountPath: /var/jenkins_home
           name: jenkins-home
@@ -34,9 +35,6 @@ spec:
             memory: 1000Mi
       volumes:
       - name: jenkins-home
-        gcePersistentDisk:
-          pdName: jenkins-home
-          fsType: ext4
-          partition: 1
-
+        hostPath:
+          path: /data/jenkins
 
