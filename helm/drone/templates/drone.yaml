@@ -14,8 +14,8 @@ spec:
         name: drone-server
     spec:
       containers:
-        - image: drone/drone:0.5
-          imagePullPolicy: Always
+        - image: {{ default "drone/drone:0.5" .Values.droneImage }}
+          imagePullPolicy:  {{ default "IfNotPresent" .Values.imagePullPolicy }}
           name: drone-server
           env:
             - name: DRONE_SERVER_ADDR
@@ -24,7 +24,6 @@ spec:
               value: "true"
             - name: I_AGREE_TO_FIX_BUGS_AND_NOT_FILE_BUGS
               value: "true"
-
             - name: DRONE_DEBUG
               valueFrom:
                 configMapKeyRef:
@@ -35,7 +34,6 @@ spec:
                 secretKeyRef:
                   name: drone-secrets
                   key: server.secret
-
             - name: DRONE_DATABASE_DRIVER
               valueFrom:
                 configMapKeyRef:
@@ -46,7 +44,6 @@ spec:
                 configMapKeyRef:
                   name: drone-config
                   key: server.database.config
-
             - name: DRONE_OPEN
               valueFrom:
                 configMapKeyRef:
@@ -99,9 +96,11 @@ spec:
               memory: 32Mi
       volumes:
         - name: drone-server-sqlite-db
-          gcePersistentDisk:
-            pdName: drone-server-sqlite-db
-            fsType: ext4
+          hostPath:
+            path: /data/drone-db
+#          gcePersistentDisk:
+#            pdName: drone-server-sqlite-db
+#            fsType: ext4
         - name: docker-socket
           hostPath:
             path: /var/run/docker.sock

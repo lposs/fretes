@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  creationTimestamp: 2016-03-30T21:14:38Z
   name: drone-config
-  namespace: default
 data:
 
   ################################
@@ -23,7 +21,7 @@ data:
   server.orgs.list: ""
   # CHANGEME: Add your GitHub/Bitbucket/Gogs/etc username here. This is a
   # comma-separated list of usernames who will have admin privs.
-  server.admin.list: admin,users,here
+  server.admin.list: admin,users,wstrange
   server.admin.everyone.is.admin: "false"
 
   # See http://readme.drone.io/0.5/manage/server/ for possible values here.
@@ -31,8 +29,9 @@ data:
   # haven't set the others up in here yet.
   # CHANGEME: Substitute your Github OAuth application client ID and secret.
   server.remote.github.is.enabled: "true"
-  server.remote.github.client.id: xxxxxxxxxxxxxxxxxxxx
-  server.remote.github.secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  server.remote.github.client.id: bbf244416f00564dce6d
+  server.remote.github.secret: 272fa01381697ee4ffa4c4b243a656c1cd7ee0ee
+
 
   ######################
   # Drone Agent Config #
