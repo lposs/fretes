@@ -8,4 +8,4 @@
 #  - secretName: tls
 #  backend:
 #    serviceName: jenkins-ui
-#    servicePort: 8080
+#    servicePort: 8080cd
