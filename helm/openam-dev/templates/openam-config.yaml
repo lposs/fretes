@@ -1,0 +1,23 @@
+# Job to configure OpenAM
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: openam-config
+spec:
+  template:
+    metadata:
+      name: openam-config
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: openam-config
+        image: {{ .Values.configImage}}:{{ .Values.configImageTag }}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: config
+          mountPath: /var/tmp/config
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: openam-config

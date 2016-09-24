@@ -6,7 +6,7 @@ metadata:
   name: openam-config
 data:
   openam.properties: |
-    SERVER_URL={{ .Values.serverUrl }}
+    SERVER_URL={{ .Values.serverBase }}
     DEPLOYMENT_URI=/openam
     BASE_DIR=/root/openam
     locale=en_US
@@ -16,29 +16,13 @@ data:
     AMLDAPUSERPASSWD=Passw0rd
     COOKIE_DOMAIN={{ default ".test.com" .Values.cookieDomain }}
     ACCEPT_LICENSES=true
-{{- if .Values.externalConfigStore }}
     DATA_STORE=dirServer
     DIRECTORY_SSL=SIMPLE
-    DIRECTORY_SERVER=opendj
+    DIRECTORY_SERVER={{ .Values.djConfigHost }}
     DIRECTORY_PORT=389
     DIRECTORY_ADMIN_PORT=4444
-{{- else }}
-    DATA_STORE=embedded
-    DIRECTORY_SSL=SIMPLE
-    DIRECTORY_SERVER=localhost
-    DIRECTORY_PORT=50389
-    DIRECTORY_ADMIN_PORT=4444
-    DIRECTORY_JMX_PORT=1689
-{{- end }}
     ROOT_SUFFIX={{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
     DS_DIRMGRDN=cn=Directory Manager
     DS_DIRMGRPASSWD={{ default "password" .Values.amadmin_pw }}
     LB_SITE_NAME=site1
     LB_PRIMARY_URL={{ default "https://openam.test.com:443/openam" .Values.loadBalancerUrl }}
-  env.sh: |
-    #!/usr/bin/env bash
-    # These variables are mandatory
-    export FQDN_HOSTNAME={{ default "openam.foo.com" .Values.fqdnHostname }}
-    export HOSTNAME=openam.test.com
-    export SERVER_URL={{ default "http://openam.test.com:8080" .Values.serverUrl }}
-    export ADMIN_PWD={{ default "password"  .Values.amadmin_pw }}

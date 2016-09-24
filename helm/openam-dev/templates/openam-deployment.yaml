@@ -24,22 +24,12 @@ spec:
         - name: openam-secrets
           mountPath: /var/secrets/openam
           readOnly: true
-        - name: config
-          mountPath: /var/tmp/config
-          readOnly: true
-{{- if .Values.persistentVolumes }}
-        - name: openam-config
-          mountPath: /root/openam
-{{end}}
+        env:
+        {{- range $key, $value := .Values.openam_env_vars }}
+          - name: {{ $key }}
+            value: {{ $value  | quote }}
+        {{ end }}
       volumes:
       - name: openam-secrets
         secret:
           secretName: openam-secrets
-      - name: config
-        configMap:
-          name: openam-config
-{{- if .Values.persistentVolumes }}
-      - name: openam-config
-        hostPath:
-          path: /data/openam-config
-{{end}}
