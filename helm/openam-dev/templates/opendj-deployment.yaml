@@ -1,13 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: opendj
+  name: opendj-config
 spec:
   replicas: {{default 1 .Values.replicaCount | quote}}
   template:
     metadata:
       labels:
-        app: opendj
+        app: opendj-config
       # This is really only needed if we use Petset alpha
 #      annotations:
 #        pod.alpha.kubernetes.io/initialized: "true"

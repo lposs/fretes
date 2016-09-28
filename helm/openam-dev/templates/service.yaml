@@ -15,12 +15,12 @@ spec:
       name: am443
   selector:
     app: openam
-{{if .Values.externalConfigStore}}
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: opendj
+  name: {{ .Values.djConfigHost }}
 spec:
   type: ClusterIP
   ports:
@@ -33,5 +33,4 @@ spec:
       #
   # Note the DJ container is in the same pod as openam - so we use the openam selector
   selector:
-    app: opendj
-{{end}}
+    app: opendj-config
