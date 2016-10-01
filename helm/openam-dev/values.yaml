@@ -2,7 +2,8 @@
 # This is a YAML-formatted file.
 # Declare name/value pairs to be passed into the templates
 
-image: forgerock/openam
+#image: forgerock/openam
+image:: forgerock/openam-base
 imageTag: latest
 
 replicaCount: 1
@@ -37,7 +38,7 @@ djImageTag: latest
 
 
 ## Todo - control whether we persist data or not
-persistentVolumes: true
+persistentVolumes: false
 
 
 configImage: forgerock/openam-config
