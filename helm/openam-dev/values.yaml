@@ -38,7 +38,7 @@ djImageTag: latest
 
 
 ## Todo - control whether we persist data or not
-persistentVolumes: false
+persistentVolumes: true
 
 
 configImage: forgerock/openam-config

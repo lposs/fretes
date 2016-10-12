@@ -8,9 +8,19 @@ spec:
     metadata:
       labels:
         app: openam
-      # This is really only needed if we use Petset alpha
 #      annotations:
-#        pod.alpha.kubernetes.io/initialized: "true"
+#        pod.beta.kubernetes.io/init-containers: '[
+#        {
+#            "name": "test",
+#            "image": "alpine",
+#            "command":  [ "/bin/sh", "-c", "echo hello > /tmp/openam/foo "],
+#            "volumeMounts": [
+#                        {
+#                            "name": "openam-home",
+#                            "mountPath": "/tmp/openam"
+#                        }]
+#        }
+#        ]'
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -23,7 +33,6 @@ spec:
         volumeMounts:
         - name: openam-secrets
           mountPath: /root/openam
-          #readOnly: true
         env:
         {{- range $key, $value := .Values.openam_env_vars }}
           - name: {{ $key }}
