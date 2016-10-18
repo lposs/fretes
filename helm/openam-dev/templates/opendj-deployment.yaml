@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: opendj-config
 spec:
-  replicas: {{default 1 .Values.replicaCount | quote}}
+  replicas: {{default 1 .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -31,7 +31,7 @@ spec:
 {{- if .Values.persistentVolumes }}
         - name: dj-data
           mountPath: /opt/opendj/data
-{{end}}
+{{- end }}
       volumes:
       - name: dj-secrets
         secret:
@@ -40,4 +40,4 @@ spec:
       - name: dj-data
         hostPath:
           path: /data/dj-data
-{{end}}
+{{- end -}}
