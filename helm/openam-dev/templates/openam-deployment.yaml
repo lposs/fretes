@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: openam
 spec:
-  replicas: {{default 1 .Values.replicaCount | quote}}
+  replicas: {{default 1 .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -36,7 +36,7 @@ spec:
         env:
         {{- range $key, $value := .Values.openam_env_vars }}
           - name: {{ $key }}
-            value: {{ $value  | quote }}
+            value: {{ $value  | quote -}}
         {{ end }}
       volumes:
       - name: openam-secrets
