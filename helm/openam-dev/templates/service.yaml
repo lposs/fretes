@@ -22,15 +22,17 @@ kind: Service
 metadata:
   name: {{ .Values.djConfigHost }}
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 389
       name: ldap
       targetPort: 389
+      nodePort: 30389
     - port: 4444
       name: djadmin
       targetPort: 4444
-      #
+      nodePort: 30444
+  #
   # Note the DJ container is in the same pod as openam - so we use the openam selector
   selector:
     app: opendj-config
