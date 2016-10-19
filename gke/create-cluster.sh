@@ -4,7 +4,10 @@ export ZONE=us-central1-f
 
 # Options - we disable GCE http LB addon since we want to deploy the nginx load balancer.
 # GCE LB is overkill for a test system
-gcloud container clusters create openam --network "default" --num-nodes 1 \
+gcloud alpha container clusters create openam --network "default" --num-nodes 2 \
+   --enable-kubernetes-alpha \
   --machine-type  n1-standard-2 --zone $ZONE \
   --disable-addons HttpLoadBalancing \
-  --disk-size 50 --scopes storage-full
+  --disk-size 50
+# No longer needed
+#  --scopes storage-full
