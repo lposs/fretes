@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Installs / Configures OpenAM
+name: openam-install
+version: 0.1.0

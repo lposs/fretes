@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: openam-install
+  labels:
+    name: openam-install
+spec:
+  # Should be a one shot deal
+  restartPolicy: Never
+  containers:
+  - name: config
+    image: {{ .Values.configImage}}:{{ .Values.configImageTag }}
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: config
+      mountPath: /var/tmp/config
+      readOnly: true
+  - name: openam
+    image: {{ default "forgerock/openam" .Values.image}}:{{ default "latest" .Values.imageTag}}
+    imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
+    ports:
+      - containerPort: 8080
+        name: http
+    volumeMounts:
+      - name: openam-root
+        mountPath: /root/openam
+  volumes:
+  - name: openam-root
+    emptyDir: {}
+  - name: config
+    configMap:
+      name: openam-config
