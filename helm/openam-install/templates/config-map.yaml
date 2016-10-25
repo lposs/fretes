@@ -1,0 +1,28 @@
+# Config map holds the basic config that gets mounted in /var/tmp/config
+# The docker container looks for this directory when openam starts up
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openam-config
+data:
+  openam.properties: |
+    SERVER_URL={{ .Values.serverBase }}
+    DEPLOYMENT_URI=/openam
+    BASE_DIR=/root/openam
+    locale=en_US
+    PLATFORM_LOCALE=en_US
+    AM_ENC_KEY=O6QWwHPO4os+zEz3Nqn/2daAYWyiFE32
+    ADMIN_PWD={{ default "password" .Values.amadmin_pw }}
+    AMLDAPUSERPASSWD=Passw0rd
+    COOKIE_DOMAIN={{ default ".test.com" .Values.cookieDomain }}
+    ACCEPT_LICENSES=true
+    DATA_STORE=dirServer
+    DIRECTORY_SSL=SIMPLE
+    DIRECTORY_SERVER={{ .Values.djConfigHost }}
+    DIRECTORY_PORT=389
+    DIRECTORY_ADMIN_PORT=4444
+    ROOT_SUFFIX={{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
+    DS_DIRMGRDN=cn=Directory Manager
+    DS_DIRMGRPASSWD={{ default "password" .Values.amadmin_pw }}
+    LB_SITE_NAME=site1
+    LB_PRIMARY_URL={{ default "https://openam.test.com:443/openam" .Values.loadBalancerUrl }}

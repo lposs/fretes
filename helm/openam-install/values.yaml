@@ -1,46 +1,37 @@
+# Default values for openam-install.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
 # Default values for openam-dev.
 # This is a YAML-formatted file.
 # Declare name/value pairs to be passed into the templates
 
-#image: forgerock/openam
-image:: forgerock/openam-base
+image: forgerock/openam
 imageTag: latest
-
-replicaCount: 1
-
 
 # Server base URL *within* the k8s cluster - not the external LB URL
 # No /openam appended here.
 serverBase: http://openam:80
 
 # What OpenAM is known by *outside* the cluster - includes context root /openam
-loadBalancerUrl: "https://openam.test.com:443/openam"
+#loadBalancerUrl: "https://openam.test.com:443/openam"
+loadBalancerUrl: "http://openam.test.com:80/openam"
+
 
 fqdnHostname: openam.test.com
 cookieDomain: .test.com
 amadmin_pw: password
 
-# Env vars for booting OpenAM (new in AM 14)
-# These are the minimal values - we take defaults for the rest
-openam_env_vars:
-  OPENAM_INSTANCE: http://openam:80/openam
-  OPENAM_CONFIG_STORE_LDAP_PORT: 389
-  OPENAM_CONFIG_STORE_LDAP_HOST: opendj-config
-  OPENAM_SECRETS: /var/secrets/openam
 
 # Suffix for OpenDJ config store
 rootSuffix:  "dc=openam,dc=forgerock,dc=org"
 
 # Hostname of opendj config store within the k8s cluster
-djConfigHost: opendj-config
-
-djImage: forgerock/opendj
-djImageTag: latest
+# This is the name of the first instance in the petset
+djConfigHost: opendj-configstore-0.opendj-configstore
 
 
-## Todo - control whether we persist data or not
-persistentVolumes: false
-
-
+# Image for OpenAM configurator
 configImage: forgerock/openam-config
 configImageTag: latest
