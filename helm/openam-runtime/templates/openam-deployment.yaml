@@ -8,19 +8,17 @@ spec:
     metadata:
       labels:
         app: openam
-#      annotations:
-#        pod.beta.kubernetes.io/init-containers: '[
-#        {
-#            "name": "test",
-#            "image": "alpine",
-#            "command":  [ "/bin/sh", "-c", "echo hello > /tmp/openam/foo "],
-#            "volumeMounts": [
-#                        {
-#                            "name": "openam-home",
-#                            "mountPath": "/tmp/openam"
-#                        }]
-#        }
-#        ]'
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[{
+            "name": "copy",
+            "image": "alpine",
+            "command":  [ "/bin/sh", "-c",
+            "cp /var/openam/boot/boot.json /root/openam; cp  -r /var/secrets/openam /root/openam/openam"],
+            "volumeMounts": [
+                        { "name": "openam-root",    "mountPath": "/root/openam" },
+                        { "name": "openam-boot",    "mountPath": "/var/openam/boot" },
+                        { "name": "openam-secrets", "mountPath": "/var/secrets/openam" }
+                        ]}]'
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -31,14 +29,42 @@ spec:
         - containerPort: 8080
           name: http
         volumeMounts:
-        - name: openam-secrets
-          mountPath: /root/openam/openam
+        - name: openam-root
+          mountPath: /root/openam
+        readinessProbe:
+          httpGet:
+            path: /openam/isAlive.jsp
+            port: 8080
+          initialDelaySeconds: 20
+          timeoutSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /openam/isAlive.jsp
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          periodSeconds: 10
+{{ if .Values.gkeLogging }}
+      - name: log-collector
+        image: gcr.io/google_containers/fluentd-sidecar-gcp:1.4
+          resources:
+            limits:
+              cpu: 100m
+              memory: 200Mi
         env:
-        {{- range $key, $value := .Values.openam_env_vars }}
-          - name: {{ $key }}
-            value: {{ $value  | quote -}}
-        {{ end }}
+        - name: FILES_TO_COLLECT
+          value: "/mnt/log/openam/log/*"
+        volumeMounts:
+        - name: openam-root
+          readOnly: true
+          mountPath: /mnt/log
+{{- end }}
       volumes:
+      - name: openam-root
+        emptyDir: {}
       - name: openam-secrets
         secret:
           secretName: openam-secrets
+      - name: openam-boot
+        configMap:
+          name: boot-json
