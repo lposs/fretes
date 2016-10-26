@@ -19,16 +19,14 @@ fqdnHostname: openam.test.com
 cookieDomain: .test.com
 amadmin_pw: password
 
-# Env vars for booting OpenAM (new in AM 14)
-# These are the minimal values - we take defaults for the rest
-openam_env_vars:
-  OPENAM_INSTANCE: http://openam:80/openam
-  OPENAM_CONFIG_STORE_LDAP_PORT: 389
-  OPENAM_CONFIG_STORE_LDAP_HOST: opendj-configstore-0.opendj-configstore
-  OPENAM_SECRETS: /root/openam/openam
+openamInstance: http://openam:80/openam
+configLdapPort:  389
+configLdapHost: opendj-configstore-0.opendj-configstore
 
 # Suffix for OpenDJ config store
 rootSuffix:  "dc=openam,dc=forgerock,dc=org"
 
-# Hostname of opendj config store within the k8s cluster
-djConfigHost: opendj-configstore-0.opendj-configstore
+
+
+# Enable Fluented logging to GKE. This wil send log output to stackdriver / cloud logging console
+gkeLogging: false
