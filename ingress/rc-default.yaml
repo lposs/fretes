@@ -18,7 +18,6 @@ spec:
       containers:
       - image: gcr.io/google_containers/nginx-ingress-controller:0.8.3
         name: nginx-ingress-lb
-        imagePullPolicy: Always
         readinessProbe:
           httpGet:
             path: /healthz
@@ -30,7 +29,7 @@ spec:
             port: 10254
             scheme: HTTP
           initialDelaySeconds: 10
-          timeoutSeconds: 1
+          timeoutSeconds: 2
         # use downward API
         env:
           - name: POD_NAME
@@ -49,4 +48,4 @@ spec:
         args:
         - /nginx-ingress-controller
         - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
-
+        - --nginx-configmap=$(POD_NAMESPACE)/nginx-load-balancer-conf

@@ -1,0 +1,22 @@
+
+
+ping opendj-configstore-1.configstore.default.svc.cluster.local
+
+ping opendj-configstore-1.opendj-configstore.default.svc.cluster.local
+
+ping opendj-configstore-0.opendj-configstore.default.svc.cluster.local
+
+nslookup  opendj-configstore0.opendj-configstore
+dig  opendj-configstore0.opendj-configstore.default.svc.cluster.local
+dig  opendj-configstore0.opendj-configstore.default.svc.kube.local
+
+
+nslookup opendj-configstore
+nslookup opendj-configstore.default.svc.cluster.local
+nslookup opendj-configstore-0
+
+nslookup opendj-configstore-0.opendj-configstore
+nslookup opendj-configstore-0.opendj-configstore.default.svc.cluster.local
+nslookup opendj-configstore-0.opendj-configstore.default.svc.kube.local
+
+nslookup opendj-configstore-0.default.svc.cluster.local

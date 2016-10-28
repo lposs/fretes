@@ -14,7 +14,7 @@ replicaCount: 1
 serverBase: http://openam:80
 
 # What OpenAM is known by *outside* the cluster - includes context root /openam
-loadBalancerUrl: "https://openam.test.com:443/openam"
+loadBalancerUrl: "http://openam.test.com:80/openam"
 
 fqdnHostname: openam.test.com
 cookieDomain: .test.com
