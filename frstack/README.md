@@ -1,5 +1,14 @@
 # Example showing openam, opendj, openidm
 
+
+
+# Note: 
+
+*** This is deprecated in favour of the projects under the helm/ directory ***
+
+
+
+
 You need to setup persistent volumes
 for this example. The easiest way to do this in a single node test cluster
 is to use the "hostPath" volume type.  This can not be used in
