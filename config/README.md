@@ -1,6 +1,11 @@
 # config
 
 
+# Note
+
+*** deprecatd in favour of projects under helm/ ***
+
+
 Holds configurations for the stack deployment on Kubernetes / Docker (Experimental)
 
 The idea is to mount config info (ideally in json or YAML) 
