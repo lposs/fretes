@@ -9,3 +9,4 @@ kubectl delete ingress openam-ingress
 kubectl delete job openam-config
 kubectl delete deployments openam
 kubectl delete deployments opendj-config
+kubectl delete pvc data-opendj-configstore-0

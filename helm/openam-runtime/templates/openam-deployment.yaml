@@ -32,19 +32,19 @@ spec:
         - name: openam-root
           mountPath: /root/openam
         # For slow environments like minikube you need to give openam time to come up
-        readinessProbe:
-          httpGet:
-            path: /openam/isAlive.jsp
-            port: 8080
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /openam/isAlive.jsp
-            port: 8080
-          initialDelaySeconds: 60
-          timeoutSeconds: 10
-          periodSeconds: 10
+#        readinessProbe:
+#          httpGet:
+#            path: /openam/isAlive.jsp
+#            port: 8080
+#          initialDelaySeconds: 30
+#          timeoutSeconds: 10
+#        livenessProbe:
+#          httpGet:
+#            path: /openam/isAlive.jsp
+#            port: 8080
+#          initialDelaySeconds: 60
+#          timeoutSeconds: 10
+#          periodSeconds: 10
 {{ if .Values.gkeLogging }}
       - name: log-collector
         image: gcr.io/google_containers/fluentd-sidecar-gcp:1.4
