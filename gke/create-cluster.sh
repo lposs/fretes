@@ -8,7 +8,7 @@ gcloud alpha container clusters create openam --network "default" --num-nodes 2 
    --enable-kubernetes-alpha \
   --machine-type  n1-standard-2 --zone $ZONE \
   --disable-addons HttpLoadBalancing \
-  --preemtible \
+  --preemptible \
   --disk-size 50
 # No longer needed
 #  --scopes storage-full

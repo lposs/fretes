@@ -1,0 +1,8 @@
+# Define storage class. For DJ we want fast disk
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: ssd
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd

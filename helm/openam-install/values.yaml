@@ -7,8 +7,17 @@
 # This is a YAML-formatted file.
 # Declare name/value pairs to be passed into the templates
 
-image: forgerock/openam
-imageTag: latest
+#image: forgerock/openam
+image: gcr.io/engineering-devops/openam
+
+pullPolicy: Always
+# Image for OpenAM configurator
+#configImage: forgerock/openam-config
+configImage: gcr.io/engineering-devops/openam-config
+configImageTag: 14.0.0-SNAPSHOT
+
+
+imageTag: 14.0.0-SNAPSHOT
 
 # Server base URL *within* the k8s cluster - not the external LB URL
 # No /openam appended here.
@@ -31,7 +40,3 @@ rootSuffix:  "dc=openam,dc=forgerock,dc=org"
 # This is the name of the first instance in the petset
 djConfigHost: opendj-configstore-0.opendj-configstore
 
-
-# Image for OpenAM configurator
-configImage: forgerock/openam-config
-configImageTag: latest
