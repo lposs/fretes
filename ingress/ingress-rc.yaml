@@ -30,7 +30,7 @@ spec:
             port: 10254
             scheme: HTTP
           initialDelaySeconds: 10
-          timeoutSeconds: 1
+          timeoutSeconds: 2
         # use downward API
         env:
           - name: POD_NAME
@@ -54,4 +54,4 @@ spec:
         - /nginx-ingress-controller
         - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
         - --nginx-configmap=$(POD_NAMESPACE)/nginx-load-balancer-conf
-        - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-configmap-example
+        - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-configmap
