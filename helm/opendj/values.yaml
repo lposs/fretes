@@ -6,6 +6,7 @@
 
 dirManagerPassword: password
 
+# djInstance name - this will be the statefull service name of DJ as well.
 djInstance: opendj-configstore
 
 # The number of instances in the petset. Each instance will be replicated to the master
@@ -19,7 +20,8 @@ djImageTag: 4.0.0-SNAPSHOT
 #pullPolicy: Always
 pullPolicy: IfNotPresent
 
-storageSize: "5Gi"
+# Size for DJ storage. Note GKE IOPS scale based on the size of the volume
+storageSize: "10Gi"
 
 # DJ tuning params. The amount of memory should be synced with memoryLimit below
 opendjJavaArgs: "-server -Xmx2g -XX:+UseG1GC"

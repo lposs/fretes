@@ -1,10 +1,9 @@
+# OpenAM install chart
 
-Work in progress
 
-The intent of this chart is to create an "installer" for OpenAM
+Chart that runs OpenAM plus a configurator image in a pod. When
+we are further along with "amster" we will expand this chart 
+to do more configuration.
 
-It's purpose is to get OpenAM installed.
 
-The idea is to break up OpenAM charts into an install phase
-and a runtime phase - to more cleanly separate out the functionality.
 

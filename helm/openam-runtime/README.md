@@ -1,4 +1,4 @@
-# Helm Chart for OpenAM Development Testing
+# Helm Chart for OpenAM 
 
 
 This chart installs OpenAM and
@@ -6,17 +6,6 @@ an external OpenDJ instance as the configuration and user store.
 
 It has been tested using "minikube" on a mac, but should work on
 any Kubernetes environment.
-
-The Chart uses the following ForgeRock Docker images:
-* forgerock/openam  - OpenAM runtime image
-* forgerock/opendj  - OpenDJ for the config / user store
-* forgerock/openam-config - Configurator Image
-
-
-If you are using minikube, the easiest way to use these images
-is to docker build them directly into the docker instance running
-inside minikube.   The docker source code for the images
-is located at https://stash.forgerock.org/projects/DOCKER/repos/docker/browse
 
 
 # Getting Started
