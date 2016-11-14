@@ -7,5 +7,6 @@ gcloud container clusters delete openam --zone $ZONE
 
 
 # Clean up all gcr images. This may or may not be what you want....
-gsutil -m rm -r gs://artifacts.${PROJECT}.appspot.com   
+echo "Run this to clean up GCR"
+echo gsutil -m rm -r gs://artifacts.${PROJECT}.appspot.com
 
