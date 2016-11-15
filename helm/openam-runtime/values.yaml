@@ -2,11 +2,11 @@
 # This is a YAML-formatted file.
 # Declare name/value pairs to be passed into the templates
 
-#image: forgerock/openam
-image: gcr.io/engineering-devops/openam
-imageTag: 14.0.0-SNAPSHOT
+openamImage: forgerock/openam
+#openamImage: gcr.io/engineering-devops/openam
+openamImageTag: 14.0.0-SNAPSHOT
 
-replicaCount: 1
+openamReplicaCount: 1
 
 # Server base URL *within* the k8s cluster - not the external LB URL
 # No /openam appended here.
@@ -26,7 +26,3 @@ configLdapHost: opendj-configstore-0.opendj-configstore
 # Suffix for OpenDJ config store
 rootSuffix:  "dc=openam,dc=forgerock,dc=org"
 
-
-
-# Enable Fluented logging to GKE. This wil send log output to stackdriver / cloud logging console
-gkeLogging: false

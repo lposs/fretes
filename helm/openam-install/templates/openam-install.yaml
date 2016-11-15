@@ -10,13 +10,13 @@ spec:
   containers:
   - name: config
     image: {{ .Values.configImage}}:{{ .Values.configImageTag }}
-    imagePullPolicy: IfNotPresent
+    imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
     volumeMounts:
     - name: config
       mountPath: /var/tmp/config
       readOnly: true
   - name: openam
-    image: {{ default "forgerock/openam" .Values.image}}:{{ default "latest" .Values.imageTag}}
+    image: {{ default "forgerock/openam" .Values.openamImage}}:{{ default "latest" .Values.openamImageTag}}
     imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
     ports:
       - containerPort: 8080

@@ -10,11 +10,11 @@ dirManagerPassword: password
 djInstance: opendj-configstore
 
 # The number of instances in the petset. Each instance will be replicated to the master
-replicaCount: 2
+replicaCount: 1
 
-#djImage: forgerock/opendj
+djImage: forgerock/opendj
 
-djImage: gcr.io/engineering-devops/opendj
+#djImage: gcr.io/engineering-devops/opendj
 djImageTag: 4.0.0-SNAPSHOT
 
 #pullPolicy: Always
@@ -24,9 +24,9 @@ pullPolicy: IfNotPresent
 storageSize: "10Gi"
 
 # DJ tuning params. The amount of memory should be synced with memoryLimit below
-opendjJavaArgs: "-server -Xmx2g -XX:+UseG1GC"
+opendjJavaArgs: "-server -Xmx1g -XX:+UseG1GC"
 
 # Kubernetes memory limit for the pod. This should be a bit bigger than the heap size above
-memoryLimit: "2500Mi"
-# CPU limit - 1 GCP Core, 1 AWS vCPU. You can specify fractional value here
-cpuLimit:  "1"
+djMemoryLimit: "1200Mi"
+# CPU limit - 1 GCP Core, 1 AWS vCPU. You can specify fractional value here, or "m" values which are milli-cpu
+djCPULimit:  "750m"
