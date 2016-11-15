@@ -2,8 +2,10 @@
 # Script that configures DJ and then runs the openam-install chart
 # At completion openam should be ready to go
 
+# Uncomment to run on GKE
+#GKE="-f gke.yaml"
 
-helm install --name opendj opendj
+helm install ${GKE} --name opendj opendj
 
 echo "Giving DJ some time to start"
 
@@ -12,7 +14,7 @@ echo "Giving DJ some time to start"
 sleep 180
 
 echo "Configuring OpenAM"
-helm install --name openam-install openam-install
+helm install ${GKE} --name openam-install openam-install
 
 echo "Waiting for the configurator "
 
