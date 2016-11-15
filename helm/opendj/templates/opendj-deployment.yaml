@@ -9,7 +9,9 @@ spec:
   - metadata:
       name: data
       annotations:
-        volume.beta.kubernetes.io/storage-class: ssd
+        volume.alpha.kubernetes.io/storage-class: anything
+        # Optional storage class here. This does not work seamlessly between minikube and gke right now
+        #volume.beta.kubernetes.io/storage-class: "fast"
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
@@ -32,8 +34,8 @@ spec:
         imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
         resources:
           limits:
-            memory: {{ default "1Gi" .Values.memoryLimit | quote}}
-            cpu: {{  default "1" .Values.cpuLimit | quote }}
+            memory: {{ default "1Gi" .Values.djMemoryLimit | quote}}
+            cpu: {{  default "0.5" .Values.djCPULimit | quote }}
         env:
         - name: BASE_DN
           value: {{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}

@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+# Comment this out if not deploying to GKE
+GKE="-f gke.yaml"
 
-echo "Deleting the install chart "
+#DRYRUN="--dry-run --debug"
+
+echo "Deleting the install chart as it is no longer required "
 # We can delete the install chart now - its job is done
-helm delete openam-install --purge
+#helm delete openam-install --purge
 
-
-helm install --name openam openam-runtime
+echo "Creating the OpenAM runtime"
+helm install ${GKE} ${DRYRUN} --name openam openam-runtime
 
 #minikube dashboard
 

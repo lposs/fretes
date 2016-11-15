@@ -50,6 +50,9 @@ spec:
         # this is optional
         - containerPort: 18080
           hostPort: 18080
+        # This is for the experimental TCP L4 ingress support.
+        - containerPort: 30389
+          hostPort: 30389
         args:
         - /nginx-ingress-controller
         - --default-backend-service=$(POD_NAMESPACE)/default-http-backend

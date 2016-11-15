@@ -5,4 +5,4 @@ kind: ConfigMap
 metadata:
   name: tcp-configmap
 data:
-  389: "default/opendj-configstore:389"
+  30389: "default/opendj-configstore:389"

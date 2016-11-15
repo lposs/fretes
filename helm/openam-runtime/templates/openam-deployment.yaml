@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: openam
 spec:
-  replicas: {{default 1 .Values.replicaCount }}
+  replicas: {{default 1 .Values.openamReplicaCount }}
   template:
     metadata:
       labels:
@@ -23,7 +23,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: openam
-        image: {{ default "forgerock/openam" .Values.image}}:{{ default "latest" .Values.imageTag}}
+        image: {{ default "forgerock/openam" .Values.openamImage}}:{{ default "latest" .Values.openamImageTag}}
         imagePullPolicy: {{default "IfNotPresent" .Values.pullPolicy}}
         ports:
         - containerPort: 8080
@@ -32,26 +32,26 @@ spec:
         - name: openam-root
           mountPath: /root/openam
         # For slow environments like minikube you need to give openam time to come up
-#        readinessProbe:
-#          httpGet:
-#            path: /openam/isAlive.jsp
-#            port: 8080
-#          initialDelaySeconds: 30
-#          timeoutSeconds: 10
-#        livenessProbe:
-#          httpGet:
-#            path: /openam/isAlive.jsp
-#            port: 8080
-#          initialDelaySeconds: 60
-#          timeoutSeconds: 10
-#          periodSeconds: 10
-{{ if .Values.gkeLogging }}
+        readinessProbe:
+          httpGet:
+            path: /openam/isAlive.jsp
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /openam/isAlive.jsp
+            port: 8080
+          initialDelaySeconds: 60
+          timeoutSeconds: 10
+          periodSeconds: 10
+{{- if .Values.gkeLogging }}
       - name: log-collector
         image: gcr.io/google_containers/fluentd-sidecar-gcp:1.4
-          resources:
-            limits:
-              cpu: 100m
-              memory: 200Mi
+        resources:
+          limits:
+            cpu: 100m
+            memory: 200Mi
         env:
         - name: FILES_TO_COLLECT
           value: "/mnt/log/openam/log/*"
@@ -59,7 +59,7 @@ spec:
         - name: openam-root
           readOnly: true
           mountPath: /mnt/log
-{{- end }}
+{{ end }}
       volumes:
       - name: openam-root
         emptyDir: {}

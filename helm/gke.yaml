@@ -1,0 +1,19 @@
+# These are values.yaml overrides for running on GKE
+# For example: helm install -f gke.yaml openam
+
+
+openamImage: gcr.io/engineering-devops/openam
+configImage: gcr.io/engineering-devops/openam-config
+djImage: gcr.io/engineering-devops/opendj
+pullPolicy: Always
+
+#openamReplicaCount: 3
+
+# Enable Fluented logging to GKE. This wil send log output to stackdriver / cloud logging console
+gkeLogging: true
+
+
+opendjJavaArgs: "-server -Xmx2g -XX:+UseG1GC"
+djCPULimit:  "1"
+djMemoryLimit: "2Gi"
+
