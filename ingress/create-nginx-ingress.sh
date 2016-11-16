@@ -11,7 +11,7 @@ kubectl expose rc default-http-backend --port=80 --target-port=8080 --name=defau
 # Create the custom nginx
 kubectl create -f nginx-conf.yaml
 kubectl create -f tcp-configmap.yaml
-kubectl create -f ingress-rc.yaml
+kubectl create -f ingress.yaml
 
 
 

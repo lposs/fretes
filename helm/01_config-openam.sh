@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 # Script that configures DJ and then runs the openam-install chart
 # At completion openam should be ready to go
+# Set the env var HELM_VALUES to use a custom value.yaml override
+# Example:  export HELM_VALUES=gke.yaml
 
-# Uncomment to run on GKE
-#GKE="-f gke.yaml"
+OPT=""
 
-helm install ${GKE} --name opendj opendj
+# Uncomment this if you want to see what helm will deploy
+#DRYRUN="--dry-run --debug"
+
+
+if [ -v HELM_VALUES ]; then
+   OPT="-f ${HELM_VALUES}"
+fi;
+
+
+helm install ${OPT} ${DRYRUN} --name opendj opendj
 
 echo "Giving DJ some time to start"
 
@@ -14,12 +24,12 @@ echo "Giving DJ some time to start"
 sleep 180
 
 echo "Configuring OpenAM"
-helm install ${GKE} --name openam-install openam-install
+helm install ${OPT} ${DRYRUN} --name openam-install openam-install
 
 echo "Waiting for the configurator "
 
 
-sleep 30
+sleep 50
 
 echo "When you see configuration complete you can control-c this shell"
 

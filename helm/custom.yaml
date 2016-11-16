@@ -17,3 +17,10 @@ opendjJavaArgs: "-server -Xmx2g -XX:+UseG1GC"
 djCPULimit:  "1"
 djMemoryLimit: "2Gi"
 
+
+
+loadBalancerUrl: "http://openam.homeunix.org:80/openam"
+fqdnHostname: openam.homeunix.org
+cookieDomain: .homeunix.org
+
+
