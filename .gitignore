@@ -9,3 +9,4 @@ staging/
 *.vdi
 scratch.sh
 out/
+/ingress/ddclient.yaml

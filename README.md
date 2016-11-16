@@ -24,9 +24,6 @@ http://kubernetes.io
 I have been testing with kube verson 1.2
 
 
-If you are on a mac, the Kube-Solo-osx project is an easy way to run a
-test K8s Cluster
-
 You will need ForgeRock Docker images. You can build these using the
 Dockerfiles in https://stash.forgerock.org/projects/DOCKER/repos/docker/browse
 

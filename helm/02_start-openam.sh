@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-# Comment this out if not deploying to GKE
-GKE="-f gke.yaml"
+OPT=""
+
+if [ -v HELM_VALUES ]; then
+   OPT="-f ${HELM_VALUES}"
+fi;
+
 
 #DRYRUN="--dry-run --debug"
 
@@ -10,7 +14,7 @@ echo "Deleting the install chart as it is no longer required "
 #helm delete openam-install --purge
 
 echo "Creating the OpenAM runtime"
-helm install ${GKE} ${DRYRUN} --name openam openam-runtime
+helm install ${OPT} ${DRYRUN} --name openam openam-runtime
 
 #minikube dashboard
 
