@@ -10,10 +10,9 @@ OPT=""
 #DRYRUN="--dry-run --debug"
 
 
-if [ -v HELM_VALUES ]; then
+if [ ! -z ${HELM_VALUES+x} ]; then
    OPT="-f ${HELM_VALUES}"
 fi;
-
 
 helm install ${OPT} ${DRYRUN} --name opendj opendj
 
@@ -24,6 +23,7 @@ echo "Giving DJ some time to start"
 sleep 180
 
 echo "Configuring OpenAM"
+
 helm install ${OPT} ${DRYRUN} --name openam-install openam-install
 
 echo "Waiting for the configurator "

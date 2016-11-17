@@ -2,7 +2,11 @@
 
 OPT=""
 
-if [ -v HELM_VALUES ]; then
+# An openam svc is still deployed from the openam-install job.
+# Remove it to avoid errors with the helm install command.
+kubectl delete svc openam
+
+if [ ! -z ${HELM_VALUES+x} ]; then
    OPT="-f ${HELM_VALUES}"
 fi;
 
