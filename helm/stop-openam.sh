@@ -6,5 +6,4 @@ helm delete opendj --purge
 helm delete openam-install --purge
 
 # Delete the dj data`
-kubectl delete pvc data-opendj-configstore-0 
-kubectl delete pvc data-opendj-configstore-1 
+kubectl delete pvc data-opendj-configstore-0
