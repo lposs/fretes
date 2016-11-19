@@ -19,16 +19,13 @@ installed already. This can scale up horizontally by increasing the replica coun
 
 # Quick start - Deploying OpenAM
 
-01_config_openam.sh  deploys opendj for the config / CTS store, and
-then deploys the openam-install chart to install and configure OpenAM.
+deploy-openam.sh  deploys opendj for the config / CTS store, 
+deploys the openam-install chart to install and configure OpenAM, 
+and then launches the runtime. At the conclusion of this chart you should 
+have one or more OpenAM instances running on a node port (30080) and/or 
+an ingress of /openam, assuming you have deployed an ingress controller. 
 
-02_start_openam.sh deletes the previous install chart (it is no 
-longer required after OpenAM is installed) and then launches the
-runtime. At the conclusion of this chart you should have one or more
-OpenAM instances running on a node port (30080) and/or an ingress of
-/openam, assuming you have deployed an ingress controller. 
-
-To remove the deployment run ./stop-openam.sh. This delete the helm
+To remove the deployment run ./remove-openam.sh. This delete the helm
 charts and the persistent volume claims backing OpenDJ.
 
 # Modifying the deployment
@@ -52,7 +49,7 @@ Further documentation can be found in each chart's README.md
 The default OpenDJ deployment uses persistent volume claims (PVC) and
 "PetSets" to provide stateful deployment of the data tier. If you
 wish to start from scratch you should delete the PVC volumes. 
-The stop-openam.sh script will do this for you. Note that
+The remove-openam.sh script will do this for you. Note that
 PVCs and PetSets are Kubernetes 1.4 alpha features. You need to be 
 on a cluster that supports these features. 
 
