@@ -24,14 +24,32 @@ initialize() {
 installOpenDJ() {
 
   # Install OpenDJ
-
   helm install ${OPT} ${DRYRUN} --name opendj opendj
 
-  echo "Giving DJ some time to start"
+  echo "Waiting for OpenDJ to start and initialize replication"
 
-  # This takes a while the first time a PVC is provisioned
-  # Todo: Have a wait loop that can tell when DJ is up and stable, replication has been initiaized, etc.
-  sleep 180
+  DJ_CONFIGURED=no
+  while [[ ${DJ_CONFIGURED} == no ]]
+  do
+    # Iterate every ten seconds
+    sleep 10
+
+    # Test for configuration status. DJ is fully configured if
+    # the script that triggers replication has started.
+    if [[ `kubectl logs opendj-configstore-0 | grep "Setting up replication from"` ]]
+    then
+      DJ_CONFIGURED=yes
+    fi
+  done
+
+  # If we're not, sleep until replication has completed
+  # Todo: replace the sleep 30 with a routine that tests whether replication has completed.
+  if [[ `kubectl logs opendj-configstore-0 | grep "We are the master"` ]]
+  then
+    :
+  else
+    sleep 30
+  fi
 
 }
 
