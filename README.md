@@ -21,7 +21,7 @@ need a ForgeRock community account to create pull requests.
 You need to have Kubernetes installed to run these examples.  See
 http://kubernetes.io
 
-I have been testing with kube verson 1.2
+This has been tested with kubernetes verson 1.4 on minikube and Google Container Engine. 
 
 
 You will need ForgeRock Docker images. You can build these using the
@@ -32,20 +32,7 @@ tag in the manifests. Eventually the manifests will be
 managed by helm so that things like tags can be templated out
 
 
-# Samples:
+# helm
 
-frstack - example that shows how to run OpenAM, OpenDJ, OpenIG and OpenIDM using 
-persistent volumes. This is the most recent
-work - so start here.  Please see the README notes in that folder
-
-
-openidm - Run's OpenIDM with the Postgres database. Also configures an instance of OpenDJ
-
-Example:
-
-```
-prepare.sh
-kubectl create -f frstack
-kubectl get pods
-kubectl get services
-```
+See the helm folder to run openam using kubernetes helm. This is the most current work - start
+here.

@@ -1,9 +1,9 @@
-# config
+# DEPRECATED
 
 
 # Note
 
-*** deprecatd in favour of projects under helm/ ***
+*** deprecated in favour of projects under helm/ ***
 
 
 Holds configurations for the stack deployment on Kubernetes / Docker (Experimental)
