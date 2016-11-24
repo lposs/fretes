@@ -1,7 +1,6 @@
 # Define default storage class. For DJ we want fast disk
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
-# todo: can we call this anything? This is to align with minikube
 metadata:
   name: anything
   annotations:
