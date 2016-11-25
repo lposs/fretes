@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[{
+            "name": "config",
+            "image": "gcr.io/google_containers/git-sync:v2.0.3",
+            "env":  [ { "name": "GIT_SYNC_REPO",    "value": "{{ .Values.openig.gitRepo }}"},
+                      { "name": "GIT_SYNC_DEST",    "value": "openig" },
+                      { "name": "GIT_SYNC_ONE_TIME","value": "true" }
+                    ],
+            "volumeMounts": [
+                        { "name": "config",    "mountPath": "/git" }
+                        ]}]'
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: OPENIG_BASE
+          value: "/var/config/openig/{{ .Values.openig.base }}"
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+# todo: When we figure out the right values here uncomment this...
+#        livenessProbe:
+#          httpGet:
+#            path: /
+#            port: {{ .Values.service.internalPort }}
+#          timeoutSeconds: 10
+#        readinessProbe:
+#          httpGet:
+#            path: /
+#            port: {{ .Values.service.internalPort }}
+#          initialDelaySeconds: 30
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        volumeMounts:
+        - name: config
+          mountPath: /var/config
+      volumes:
+      - name: config
+        emptyDir: {}
+
+

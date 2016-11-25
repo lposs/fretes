@@ -1,0 +1,32 @@
+# Default values for openig.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+image:
+  repository: forgerock/openig
+  tag: 5.0.0-SNAPSHOT
+  pullPolicy: IfNotPresent
+service:
+  name: openig
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 8080
+resources:
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+  requests:
+    cpu: 400m
+    memory: 1024Mi
+
+
+
+openig:
+  # Git repo where the OpenIG configuration is stored
+  gitRepo: https://github.com/ForgeRock/fretes.git
+  # *RELATIVE* path within the above git repo to where the root openig config directory is located
+  # (where openig expects another /config directory to be located)
+  # Must not start with a /. The path does not include the repo name itself.
+  # Example: You have something like Git repo   https://some-git/foo.git/my-configuration/openig/config/config.json
+  # base would  set to  base: my-configuration/openig
+  base: config/openig
