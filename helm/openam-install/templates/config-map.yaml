@@ -24,5 +24,13 @@ data:
     ROOT_SUFFIX={{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
     DS_DIRMGRDN=cn=Directory Manager
     DS_DIRMGRPASSWD={{ default "password" .Values.amadmin_pw }}
+    # Set the user data store to the same store. We assume the directory has an ou=People container
+    USERSTORE_TYPE=LDAPv3ForOpenDS
+    USERSTORE_SSL=SIMPLE
+    USERSTORE_HOST={{ .Values.djConfigHost }}
+    USERSTORE_PORT=389
+    USERSTORE_SUFFIX={{ default "dc=openam,dc=forgerock,dc=org" .Values.rootSuffix }}
+    USERSTORE_MGRDN=cn=Directory Manager
+    USERSTORE_PASSWD={{ default "password" .Values.amadmin_pw }}
     LB_SITE_NAME=site1
     LB_PRIMARY_URL={{ default "https://openam.test.com:443/openam" .Values.loadBalancerUrl }}

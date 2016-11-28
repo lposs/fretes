@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         app: {{ template "fullname" . }}
+{{ if .Values.gitConfig }}
       annotations:
         pod.beta.kubernetes.io/init-containers: '[{
             "name": "config",
@@ -21,14 +22,17 @@ spec:
             "volumeMounts": [
                         { "name": "config",    "mountPath": "/git" }
                         ]}]'
+{{ end }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+{{ if .Values.gitConfig }}
         env:
         - name: OPENIG_BASE
           value: "/var/config/openig/{{ .Values.openig.base }}"
+{{ end }}
         ports:
         - containerPort: {{ .Values.service.internalPort }}
 # todo: When we figure out the right values here uncomment this...
@@ -44,11 +48,13 @@ spec:
 #          initialDelaySeconds: 30
         resources:
 {{ toYaml .Values.resources | indent 12 }}
+{{ if .Values.gitConfig }}
         volumeMounts:
         - name: config
           mountPath: /var/config
       volumes:
       - name: config
         emptyDir: {}
+{{ end }}
 
 
